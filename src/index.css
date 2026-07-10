@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================
+ * CoolSpanOS 全局基础样式
+ * 重点：字体平滑渲染 + 亚克力材质
+ * =========================== */
+
+:root {
+  /* 字体栈：Windows 11 风格的 Segoe UI Variable 优先，附带中文 fallback */
+  --csos-font-sans:
+    "Segoe UI Variable", "Segoe UI", "Inter", system-ui, -apple-system,
+    BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+    "Source Han Sans SC", "Noto Sans CJK SC", "Helvetica Neue", Arial,
+    sans-serif;
+
+  --csos-font-display:
+    "Segoe UI Variable Display", "Segoe UI", "Inter", system-ui, -apple-system,
+    BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+    sans-serif;
+
+  --csos-font-mono:
+    "Cascadia Code", "JetBrains Mono", "Fira Code", "Source Code Pro",
+    "Consolas", monospace;
+
+  /* 系统色板 */
+  --csos-accent: #0078d4;
+  --csos-accent-hover: #1689da;
+  --csos-accent-active: #006cbe;
+  --csos-bg-deep: #0a0a0c;
+
+  font-family: var(--csos-font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+
+  /* ClearType 风格的亚像素抗锯齿 + 文字平滑 + 数字等宽 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  font-feature-settings: "ss01", "cv11", "tnum" 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--csos-bg-deep);
+}
+
+body {
+  /* 提升小字号清晰度 */
+  text-rendering: geometricPrecision;
+  font-variant-ligatures: common-ligatures contextual;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  /* 统一为系统中性字形 */
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== 亚克力 / Mica 工具类 ===== */
+@layer components {
+  .csos-acrylic {
+    background-color: rgba(32, 32, 32, 0.6);
+    backdrop-filter: blur(40px) saturate(180%) brightness(110%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(110%);
+  }
+
+  .csos-acrylic-strong {
+    background-color: rgba(28, 28, 30, 0.78);
+    backdrop-filter: blur(60px) saturate(200%) brightness(105%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(105%);
+  }
+
+  .csos-mica {
+    background-color: rgba(36, 36, 40, 0.55);
+    backdrop-filter: blur(80px) saturate(150%);
+    -webkit-backdrop-filter: blur(80px) saturate(150%);
+  }
+
+  /* Fluent 风格 hover/active 状态 */
+  .csos-hover {
+    transition: background-color 120ms cubic-bezier(0.16, 1, 0.3, 1),
+      backdrop-filter 120ms ease;
+  }
+  .csos-hover:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  .csos-hover:active {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  /* 居中任务栏 dock 项 */
+  .csos-dock-item {
+    @apply relative flex h-11 w-11 items-center justify-center rounded-md text-white/90 csos-hover;
+  }
+  .csos-dock-item[data-active="true"]::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--csos-accent);
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .csos-dock-item[data-active="true"] {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* 文字辅助 */
+  .csos-text-primary {
+    color: rgba(255, 255, 255, 0.96);
+  }
+  .csos-text-secondary {
+    color: rgba(255, 255, 255, 0.66);
+  }
+  .csos-text-tertiary {
+    color: rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 启动时字体加载平滑 */
+@font-face {
+  font-family: "Segoe UI Variable";
+  src: local("Segoe UI Variable Text"), local("Segoe UI Variable"),
+    local("Segoe UI");
+  font-display: swap;
+}
+
+/* 减弱动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* 全局动画 keyframes */
+@keyframes csos-fade-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes csos-fade-up-r {
+  from {
+    opacity: 0;
+    transform: translate(0, 16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes csos-bloom {
+  0% { opacity: 0; filter: blur(20px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+
