@@ -1,78 +1,131 @@
 # CoolSpanOS
 
-一个仿照 Windows 11 视觉风格的 Linux 定制发行版，基于 Alpine Linux + Wayland + WebKit。
+A Linux distribution with Windows 11-inspired UI, built on Alpine Linux + Wayland + WebKit.
 
-## 特性
+## Features
 
-- 🎨 **Windows 11 风格 UI**：亚克力材质、居中任务栏、开始菜单、动态壁纸
-- 📦 **轻量高效**：基于 Alpine Linux，ISO 仅 41MB
-- 🌐 **Web 技术栈**：React 18 + TypeScript + Tailwind CSS
-- 🎯 **开机直达桌面**：Cage + Cog 全屏浏览器，无需登录
-- 📝 **字体平滑**：Noto 字体 + 亚像素抗锯齿
-- 🌍 **中文支持**：Noto CJK 字体已预装
+- 🎨 **Windows 11 Style UI** — Acrylic effects, centered taskbar, Start menu, and dynamic wallpaper
+- 📦 **Lightweight** — Based on Alpine Linux, ISO is only 41MB
+- 🌐 **Modern Web Stack** — React 18 + TypeScript + Tailwind CSS
+- 🎯 **Boot to Desktop** — Cage + Cog fullscreen browser, no login required
+- 📝 **Font Smoothing** — Noto fonts with subpixel antialiasing
+- 🌍 **Multi-language** — Noto CJK fonts pre-installed
 
-## 快速开始
+## Quick Start
 
-### 从 ISO 启动
+### Run from ISO
 
-1. 下载最新版 ISO 镜像（见 Releases）
-2. 使用 Rufus、Etcher 等工具写入 U 盘
-3. 从 USB 启动电脑或在虚拟机中挂载 ISO
+1. Download the latest ISO from [Releases](../../releases)
+2. Write it to a USB drive using [Rufus](https://rufus.ie/), [Etcher](https://etcher.balena.io/), or similar tools
+3. Boot from USB, or mount the ISO in a virtual machine
 
-### 构建 ISO
+### Build ISO from Source
+
+Requirements: WSL (Ubuntu), Node.js 18+, root privileges
 
 ```bash
-# 1. 进入 WSL
+# 1. Enter WSL
 wsl -d Ubuntu
 
-# 2. 构建 React 产物
-cd /mnt/e/CoolSpanOS
+# 2. Install dependencies
+sudo apt-get update
+sudo apt-get install -y curl tar parted dosfstools e2fsprogs kpartx xorriso syslinux extlinux grub-common grub-pc-bin
+
+# 3. Clone and build React
+git clone https://github.com/we123tdt/CoolSpanOS.git
+cd CoolSpanOS
 npm install
 npm run build
 
-# 3. 执行构建脚本（需要 root 权限）
+# 4. Run the build script
 sudo bash os-build/build.sh
 
-# 4. ISO 将生成在项目根目录
+# 5. The ISO will be generated at project root
 ls -la CoolSpanOS.iso
 ```
 
-## 系统架构
+## System Architecture
 
 ```
 CoolSpanOS
-├── 内核：Linux 6.6 LTS
-├── 发行版：Alpine Linux 3.20
-├── 显示：Wayland + Cage（单窗口合成器）
-├── 浏览器：WPE WebKit + Cog
-├── UI：React 18 + Tailwind CSS
-└── 字体：Noto Sans + Noto CJK
+├── Kernel:        Linux 6.6 LTS
+├── Base:          Alpine Linux 3.20
+├── Display:       Wayland + Cage (single-window compositor)
+├── Browser:       WPE WebKit + Cog
+├── UI Framework:  React 18 + Tailwind CSS
+└── Fonts:         Noto Sans + Noto CJK
 ```
 
-## 项目结构
+## Project Structure
 
 ```
 CoolSpanOS/
-├── src/                    # React 源代码
-│   ├── components/         # UI 组件（桌面、任务栏、开始菜单等）
-│   ├── store/              # Zustand 状态管理
-│   ├── lib/                # 工具函数
-│   └── utils/              # 动画常量
-├── os-build/               # Linux 发行版构建脚本
-│   └── build.sh            # 主构建脚本
-├── dist/                   # React 构建产物
-└── CoolSpanOS.iso          # 生成的 ISO（不在 git 中）
+├── src/                    # React source code
+│   ├── components/         # UI components (Desktop, Taskbar, StartMenu, etc.)
+│   ├── store/              # Zustand state management
+│   ├── lib/                # Utility functions and icons
+│   ├── hooks/              # React hooks
+│   ├── pages/              # Page components
+│   └── utils/              # Animation constants
+├── os-build/               # Linux distribution build scripts
+│   └── build.sh            # Main build script
+├── dist/                   # React build output (gitignored)
+├── .trae/documents/        # PRD and technical docs
+└── CoolSpanOS.iso          # Generated ISO image (gitignored)
 ```
 
-## 操作指南
+## Operation Guide
 
-| 操作 | 方式 |
-|------|------|
-| 打开开始菜单 | 点击任务栏向上箭头 / Win 键 |
-| 打开应用 | 双击桌面图标 / 点击任务栏图标 |
-| 最小化窗口 | 点击任务栏图标 |
-| 关闭浮层 | Esc 键 |
+| Action | Method |
+|--------|--------|
+| Open Start menu | Click the up-arrow in taskbar / press `Win` |
+| Open app | Double-click desktop icon / click taskbar icon |
+| Minimize window | Click the taskbar icon of the app |
+| Close overlay | Press `Esc` |
+| Drag window | Click and drag the title bar |
+| Maximize / Restore | Double-click the title bar |
 
-## 许可证
+## Tech Stack
 
-MIT License - 详见 [LICENSE](LICENSE)
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand
+- **System**: Alpine Linux 3.20, Linux Kernel 6.6 LTS
+- **Display**: Wayland, Cage (compositor)
+- **Browser**: WPE WebKit, Cog
+- **Build**: Vite, grub-mkrescue
+- **Init**: OpenRC
+
+## Roadmap
+
+- [ ] Multi-language UI (i18n)
+- [ ] File manager application
+- [ ] Terminal application
+- [ ] Settings panel for system preferences
+- [ ] Network manager UI
+- [ ] Package manager integration
+- [ ] ARM64 (aarch64) support
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Acknowledgments
+
+- [Alpine Linux](https://alpinelinux.org/) — The base system
+- [Cage](https://github.com/cage-kage/cage) — Wayland compositor
+- [Cog](https://github.com/Igalia/cog) — WPE WebKit launcher
+- [WPE WebKit](https://wpewebkit.org/) — Web rendering engine
+- Inspired by Windows 11 design language
+
+---
+
+**Note**: This is an experimental project. The current ISO is a live image — it runs in memory and does not modify your disk. Use a virtual machine for testing.
