@@ -16,7 +16,7 @@
 ## ✨ 特性
 
 - 🎨 **[Windows 11 风格 UI](#-技术栈)** — 亚克力材质、居中任务栏、开始菜单、动态壁纸
-- 📦 **[轻量高效](#-系统架构)** — 基于 [Alpine Linux](https://alpinelinux.org/)，ISO 仅 41MB
+- 📦 **[轻量高效](#-系统架构)** — 基于 [Alpine Linux](https://alpinelinux.org/)，磁盘镜像仅 ~750MB
 - 🌐 **[Web 技术栈](#-技术栈)** — [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Tailwind CSS](https://tailwindcss.com/)
 - 🎯 **[开机直达桌面](#-快速开始)** — [Cage](https://github.com/cage-kage/cage) + [Cog](https://github.com/Igalia/cog) 全屏浏览器，无需登录
 - 📝 **[字体平滑](#-技术栈)** — [Noto](https://fonts.google.com/noto) 字体 + 亚像素抗锯齿
@@ -24,11 +24,29 @@
 
 ## 🚀 快速开始
 
-### 从 ISO 启动
+### 在虚拟机中运行（推荐）
 
-1. 从 [Releases](https://github.com/we123tdt/CoolSpanOS/releases) 下载最新版 ISO 镜像
-2. 使用 [Rufus](https://rufus.ie/) / [Etcher](https://etcher.balena.io/) 等工具写入 U 盘
-3. 从 USB 启动电脑，或在虚拟机（[VirtualBox](https://www.virtualbox.org/) / [VMware](https://www.vmware.com/)）中挂载 ISO
+1. 从 [Releases](https://github.com/we123tdt/CoolSpanOS/releases) 下载镜像
+   - **VirtualBox**：下载 `.vdi` 格式
+   - **VMware**：下载 `.vmdk` 格式
+
+2. **VirtualBox 使用方法**：
+   - 打开 VirtualBox，点击 **"新建"**
+   - 名称：CoolSpanOS，类型：Linux，版本：Other Linux (64-bit)
+   - 内存：建议 **4096 MB** 以上
+   - 选择 **"使用已有的虚拟硬盘文件"**，选择下载的 `.vdi`
+   - 点击 **"创建"**，然后启动虚拟机
+
+3. **VMware 使用方法**：
+   - 创建新虚拟机，选择 **"稍后安装操作系统"**
+   - 类型：Linux，版本：Other Linux 5.x kernel 64-bit
+   - 完成向导后，删除默认硬盘
+   - 添加新硬盘 → **"使用现有虚拟磁盘"** → 选择 `.vmdk`
+   - 启动虚拟机
+
+4. 默认账号：
+   - 用户名：`coolspan`
+   - 密码：`coolspan`
 
 ### 从源码构建
 

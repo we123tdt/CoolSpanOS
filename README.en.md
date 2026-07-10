@@ -16,7 +16,7 @@
 ## ✨ Features
 
 - 🎨 **[Windows 11 Style UI](#-tech-stack)** — Acrylic effects, centered taskbar, Start menu, and dynamic wallpaper
-- 📦 **[Lightweight](#-system-architecture)** — Based on [Alpine Linux](https://alpinelinux.org/), ISO is only 41MB
+- 📦 **[Lightweight](#-system-architecture)** — Based on [Alpine Linux](https://alpinelinux.org/), disk image is only ~750MB
 - 🌐 **[Modern Web Stack](#-tech-stack)** — [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Tailwind CSS](https://tailwindcss.com/)
 - 🎯 **[Boot to Desktop](#-quick-start)** — [Cage](https://github.com/cage-kage/cage) + [Cog](https://github.com/Igalia/cog) fullscreen browser, no login required
 - 📝 **[Font Smoothing](#-tech-stack)** — [Noto](https://fonts.google.com/noto) fonts with subpixel antialiasing
@@ -24,11 +24,29 @@
 
 ## 🚀 Quick Start
 
-### Run from ISO
+### Run in Virtual Machine (Recommended)
 
-1. Download the latest ISO from [Releases](https://github.com/we123tdt/CoolSpanOS/releases)
-2. Write it to a USB drive using [Rufus](https://rufus.ie/) or [Etcher](https://etcher.balena.io/)
-3. Boot from USB, or mount the ISO in a virtual machine ([VirtualBox](https://www.virtualbox.org/) / [VMware](https://www.vmware.com/))
+1. Download the disk image from [Releases](https://github.com/we123tdt/CoolSpanOS/releases)
+   - **VirtualBox**: Download `.vdi` format
+   - **VMware**: Download `.vmdk` format
+
+2. **For VirtualBox**:
+   - Open VirtualBox, click **"New"**
+   - Name: CoolSpanOS, Type: Linux, Version: Other Linux (64-bit)
+   - Memory size: **4096 MB** or more recommended
+   - Select **"Use an existing virtual hard disk file"** and choose the `.vdi` file
+   - Click **"Create"**, then start the VM
+
+3. **For VMware**:
+   - Create a new virtual machine, select **"I will install the operating system later"**
+   - Type: Linux, Version: Other Linux 5.x kernel 64-bit
+   - After wizard, remove the default hard disk
+   - Add new hard disk → **"Use an existing disk"** → select the `.vmdk` file
+   - Start the VM
+
+4. Default credentials:
+   - Username: `coolspan`
+   - Password: `coolspan`
 
 ### Build from Source
 
